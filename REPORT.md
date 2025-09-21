@@ -58,3 +58,35 @@ Part 3 uses archiving (`ar`) to create a reusable library and links against it.
 
 **Answer:**
 Yes, the symbols are present in the static executable. Static linking copies all library code directly into the executable, so the functions become part of the final binary and don't need external dependencies.
+
+## Feature 4: Dynamic Library Implementation
+
+### 1. What is Position-Independent Code (-fPIC) and why is it required for shared libraries?
+
+**Answer:**
+**-fPIC** (Position Independent Code) generates code that can execute correctly regardless of its memory address. This is required for shared libraries because:
+
+- Shared libraries are loaded at different memory addresses by different programs
+- Without -fPIC, the code contains absolute addresses that would break when loaded elsewhere
+- -fPIC uses relative addressing instead of absolute addressing
+
+### 2. Explain the difference in file size between static and dynamic clients.
+
+**Answer:**
+The **static client** (`client_static`) is larger because it contains copies of all library code within the executable. The **dynamic client** (`client_dynamic`) is smaller because it only contains references to the external shared library (`libmputils.so`).
+
+Example sizes:
+- client_static: ~20-30KB (contains all library code)
+- client_dynamic: ~15-20KB (only main program + references)
+
+### 3. What is LD_LIBRARY_PATH and why was it necessary to set it?
+
+**Answer:**
+**LD_LIBRARY_PATH** is an environment variable that tells the dynamic linker where to search for shared libraries beyond the standard system paths.
+
+It was necessary because:
+- Our `libmputils.so` is in a custom location (`./lib`)
+- The system's dynamic loader doesn't know to look in non-standard directories
+- Setting `export LD_LIBRARY_PATH=./lib:$LD_LIBRARY_PATH` temporarily adds our lib directory to the search path
+
+This demonstrates that shared libraries must be installed in standard locations or their location must be specified.
