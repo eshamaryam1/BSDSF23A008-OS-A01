@@ -34,3 +34,27 @@ A git tag marks specific commits as important milestones (like releases).
 **Purpose:** GitHub Releases package software versions with release notes for distribution.
 
 **Significance of binaries:** Users can download and run the program immediately without compiling. The attached `bin/client` executable provides a ready-to-use version of our multi-file program.
+
+## Feature 3: Static Library Implementation
+
+### 1. Compare the Makefile from Part 2 and Part 3. What are the key differences?
+
+**Answer:**
+The key differences are:
+- **Part 2:** Direct linking of all object files: `gcc obj/*.o -o bin/client`
+- **Part 3:** Library creation and linking: 
+  - `ar rcs lib/libmputils.a obj/mystrfunctions.o obj/myfilefunctions.o`
+  - `gcc obj/main.o -L./lib -lmputils -o bin/client_static`
+
+Part 3 uses archiving (`ar`) to create a reusable library and links against it.
+
+### 2. What is the purpose of the `ar` command? Why is `ranlib` often used?
+
+**Answer:**
+- **`ar`**: Creates static libraries (archives) by bundling object files into a single `.a` file
+- **`ranlib`**: Generates an index of symbols in the archive for faster linking. Modern `ar` with `s` flag often handles this automatically.
+
+### 3. When you run `nm` on client_static, are symbols for functions like mystrlen present?
+
+**Answer:**
+Yes, the symbols are present in the static executable. Static linking copies all library code directly into the executable, so the functions become part of the final binary and don't need external dependencies.
