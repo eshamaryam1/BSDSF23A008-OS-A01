@@ -90,3 +90,34 @@ It was necessary because:
 - Setting `export LD_LIBRARY_PATH=./lib:$LD_LIBRARY_PATH` temporarily adds our lib directory to the search path
 
 This demonstrates that shared libraries must be installed in standard locations or their location must be specified.
+
+
+## Feature 5: Man Pages and Installation
+
+### 1. What is the purpose of the groff formatting language?
+
+**Answer:**
+Groff (GNU troff) is a typesetting system used for formatting man pages. It provides:
+- Simple markup language for documentation
+- Consistent formatting across different systems
+- Support for various output formats (text, PDF, HTML)
+- Standard sections like NAME, SYNOPSIS, DESCRIPTION
+
+### 2. Why are man pages typically gzipped during installation?
+
+**Answer:**
+Man pages are gzipped to:
+- Save disk space (compression reduces file size)
+- Speed up man page searches and loading
+- Follow Linux/Unix conventions and standards
+- Maintain compatibility with the man-db system
+
+### 3. What does the install target in the Makefile do?
+
+**Answer:**
+The install target:
+- Copies the executable to `/usr/local/bin/`
+- Copies and compresses man pages to `/usr/local/share/man/`
+- Sets appropriate file permissions (755 for binaries, 644 for docs)
+- Makes the program available system-wide
+- Enables `man` command access to documentation
