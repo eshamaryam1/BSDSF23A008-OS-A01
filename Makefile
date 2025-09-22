@@ -136,3 +136,64 @@ analyze:
 	@ldd $(BIN_DIR)/client_dynamic 2>/dev/null || echo "Dynamic executable not built"
 
 .PHONY: all direct static dynamic clean test analyze
+
+# ==============================================================================
+# MAN PAGES INSTALLATION (Feature 5)
+# ==============================================================================
+
+# Installation paths
+PREFIX = /usr/local
+BIN_INSTALL_DIR = $(PREFIX)/bin
+MAN1_INSTALL_DIR = $(PREFIX)/share/man/man1
+MAN3_INSTALL_DIR = $(PREFIX)/share/man/man3
+
+# Install target
+install: all
+	@echo "Installing program and documentation..."
+	@mkdir -p $(BIN_INSTALL_DIR)
+	@mkdir -p $(MAN1_INSTALL_DIR)
+	@mkdir -p $(MAN3_INSTALL_DIR)
+	
+	# Install executable
+	install -m 755 $(BIN_DIR)/client $(BIN_INSTALL_DIR)/
+	@echo "Installed executable: $(BIN_INSTALL_DIR)/client"
+	
+	# Install man pages
+	install -m 644 man/man1/client.1 $(MAN1_INSTALL_DIR)/
+	gzip -f $(MAN1_INSTALL_DIR)/client.1
+	@echo "Installed man page: $(MAN1_INSTALL_DIR)/client.1.gz"
+	
+	# Install function man pages
+	for manpage in man/man3/*.3; do \
+		install -m 644 $$manpage $(MAN3_INSTALL_DIR)/; \
+		gzip -f $(MAN3_INSTALL_DIR)/$$(basename $$manpage); \
+		echo "Installed man page: $(MAN3_INSTALL_DIR)/$$(basename $$manpage).gz"; \
+	done
+	
+	@echo "Installation complete! You can now run 'client' from anywhere."
+	@echo "View man pages with: man client, man mystrlen, etc."
+
+# Uninstall target
+uninstall:
+	@echo "Uninstalling program and documentation..."
+	rm -f $(BIN_INSTALL_DIR)/client
+	rm -f $(MAN1_INSTALL_DIR)/client.1.gz
+	rm -f $(MAN3_INSTALL_DIR)/mystrlen.3.gz
+	rm -f $(MAN3_INSTALL_DIR)/mystrcpy.3.gz
+	rm -f $(MAN3_INSTALL_DIR)/mystrncpy.3.gz
+	rm -f $(MAN3_INSTALL_DIR)/mystrcat.3.gz
+	rm -f $(MAN3_INSTALL_DIR)/wordCount.3.gz
+	rm -f $(MAN3_INSTALL_DIR)/mygrep.3.gz
+	@echo "Uninstall complete!"
+
+# Local test of man pages
+man-test:
+	@echo "=== Testing man pages locally ==="
+	@echo "Client man page:"
+	@man -l man/man1/client.1 || echo "Use: groff -man man/man1/client.1 | less"
+	@echo ""
+	@echo "Function man pages are in man/man3/"
+	@ls -la man/man3/
+
+# Add install to phony targets
+.PHONY: install uninstall man-test

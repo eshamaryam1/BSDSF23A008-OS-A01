@@ -1,0 +1,39 @@
+.TH CLIENT 1 "April 2024" "v1.0" "User Commands"
+.SH NAME
+client \- test utility for libmputils library functions
+.SH SYNOPSIS
+.B client
+.SH DESCRIPTION
+The
+.B client
+program is a test driver for the libmputils library functions. It demonstrates
+and tests the string manipulation and file operation functions provided by
+the library.
+.PP
+The program tests the following functions:
+.TP
+.B String Functions:
+mystrlen, mystrcpy, mystrncpy, mystrcat
+.TP
+.B File Functions:
+wordCount, mygrep
+.SH OPTIONS
+This program does not accept any command-line options. It runs predefined tests
+and displays the results.
+.SH EXAMPLES
+To run the test program:
+.PP
+.nf
+.RS
+$ client
+.RE
+.fi
+.SH EXIT STATUS
+Returns 0 on successful execution.
+.SH AUTHOR
+Esha Maryam (eshamaryam11em@gmail.com)
+.SH "SEE ALSO"
+.BR mystrlen (3),
+.BR mystrcpy (3),
+.BR wordCount (3),
+.BR mygrep (3)

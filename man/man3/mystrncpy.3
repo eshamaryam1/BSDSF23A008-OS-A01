@@ -1,0 +1,22 @@
+.TH MYSTRNCPY 3 "April 2024" "v1.0" "Library Functions"
+.SH NAME
+mystrncpy \- copy a string with length limit
+.SH SYNOPSIS
+.nf
+.B #include "../include/mystrfunctions.h"
+.PP
+.BI "int mystrncpy(char *" dest ", const char *" src ", int " n );
+.fi
+.SH DESCRIPTION
+The
+.B mystrncpy()
+function copies at most
+.I n
+characters from the string pointed to by
+.IR src
+to
+.IR dest .
+.SH RETURN VALUE
+Returns the number of characters processed.
+.SH AUTHOR
+Your Name <your.email@example.com>

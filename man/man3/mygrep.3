@@ -1,0 +1,15 @@
+.TH MYGREP 3 "April 2024" "v1.0" "Library Functions"
+.SH NAME
+mygrep \- search for string in file lines
+.SH SYNOPSIS
+.nf
+.B #include "../include/myfilefunctions.h"
+.PP
+.BI "int mygrep(FILE " fp ", const char *" search_str ", char **" matches );
+.fi
+.SH DESCRIPTION
+Searches for lines containing the given string in a file.
+.SH RETURN VALUE
+Returns count of matches on success, -1 on error.
+.SH AUTHOR
+Esha Maryam (eshamaryam11em@gmail.com)
